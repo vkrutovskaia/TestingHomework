@@ -1,19 +1,20 @@
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Random;
-
 
 class UtilsTest extends Utils {
 
     Utils utils = new Utils();
+
+    @Test
+    public void testConcatenateAllChecks() {
+        String actual = utils.concatenateWords("","");
+        Assert.assertEquals(actual.replaceAll("[^а-яА-Я]", ""),actual);
+        Assert.assertNotNull(actual);
+        Assert.assertFalse(actual.isEmpty());
+    }
 
     @Test
     public void testConcatenateWordsIsNotNull() throws NullPointerException  {
@@ -28,11 +29,12 @@ class UtilsTest extends Utils {
         Assert.assertNotEquals(expected,actual);
     }
     @Test
-    void testConcatenateWordsNonLatin() {
+    public void testConcatenateWordsNonLatin() {
         String actual = utils.concatenateWords("","");
         String expected = actual.replaceAll("[^а-яА-Я]", "");
         Assert.assertEquals(expected, actual);
     }
+
     @Ignore
     @Test
     public  void testComputeFactorial() {
