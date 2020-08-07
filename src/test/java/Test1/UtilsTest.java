@@ -1,8 +1,13 @@
+package Test1;
 
+import Test1.Utils;
+import com.sun.istack.internal.NotNull;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+
+import java.util.Random;
 
 class UtilsTest extends Utils {
 
@@ -11,27 +16,28 @@ class UtilsTest extends Utils {
     @Test
     public void testConcatenateAllChecks() {
         String actual = utils.concatenateWords("","");
-        Assert.assertEquals(actual.replaceAll("[^а-яА-Я]", ""),actual);
+        Assert.assertEquals(actual.replaceAll("[^\\x00-\\xFF]", "").trim(),actual);
         Assert.assertNotNull(actual);
         Assert.assertFalse(actual.isEmpty());
     }
 
-    @Test
-    public void testConcatenateWordsIsNotNull() throws NullPointerException  {
-        String actual = utils.concatenateWords("","");
-        String expected = null;
-        Assert.assertNotEquals(expected, actual);
+    @Test /*if one of Strings in Utils is null - test passed*/
+    public void testConcatenateWordsIsNotNull()   {
+        Assert.assertThrows(NullPointerException.class, ()->concatenateWords(null,null));
+        Assert.assertThrows(NullPointerException.class, ()->concatenateWords(null,""));
+        Assert.assertThrows(NullPointerException.class, ()-> concatenateWords("",null));
+
     }
     @Test
     public void testConcatenateWordsHasNotEmptyString(){
-        String actual = utils.concatenateWords("","");
+        String actual = concatenateWords("","");
         String expected = "";
         Assert.assertNotEquals(expected,actual);
     }
     @Test
     public void testConcatenateWordsNonLatin() {
-        String actual = utils.concatenateWords("","");
-        String expected = actual.replaceAll("[^а-яА-Я]", "");
+        String actual = concatenateWords("","");
+        String expected = concatenateWords("","").replaceAll("[^\\x00-\\xFF]", "").trim();
         Assert.assertEquals(expected, actual);
     }
 
@@ -44,13 +50,11 @@ class UtilsTest extends Utils {
 
     }
     @Test
-    @Timeout(100)
-    public void testFactorialWithTimeout(){
+    @Timeout(300)
+    public void testFactorialWithTimeout() throws InterruptedException{
         int result = 1;
-        int factorial = (int)(Math.random()*10);
-        for (int i = 1; i <= factorial; i++)
-            result = result * i;
-        int actual = result;
+        int factorial = new Random().nextInt();
+        int actual = utils.factorialWithTimeout(result, factorial);
         int expected = result;
         Assert.assertEquals(expected, actual);
     }
