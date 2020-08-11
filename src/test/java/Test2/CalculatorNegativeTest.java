@@ -27,6 +27,7 @@ public class CalculatorNegativeTest {
         assertThat(num, nullValue());
     }
 
+
     @Test/*both failed*/
     public void getFailOperation() {
         Random r = new Random();
