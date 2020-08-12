@@ -9,13 +9,15 @@ public class Calculator {
     public Calculator() {
 
     }
+
     static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
         Calculator calculator = new Calculator();
         int num1 = calculator.getInt();
         int num2 = calculator.getInt();
         char operation = calculator.getOperation();
-        int result =calculator.calc(num1, num2, operation);
+        int result = calculator.calc(num1, num2, operation);
         System.out.println("Результат операции: " + result);
     }
 
@@ -48,15 +50,20 @@ public class Calculator {
     public int calc(int num1, int num2, char operation) {
         int result;
         switch (operation) {
-            case '+': result = num1 + num2;
+            case '+':
+                result = num1 + num2;
                 break;
-            case '-': result = num1 - num2;
+            case '-':
+                result = num1 - num2;
                 break;
-            case '*': result = num1 * num2;
+            case '*':
+                result = num1 * num2;
                 break;
-            case '/': result = num1 / num2;
+            case '/':
+                result = num1 / num2;
                 break;
-            default: result = calc(num1, num2, operation);
+            default:
+                result = calc(num1, num2, operation);
         }
         return result;
     }

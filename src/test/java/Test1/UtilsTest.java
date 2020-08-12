@@ -1,13 +1,16 @@
 package Test1;
 
-import Test1.Utils;
-import com.sun.istack.internal.NotNull;
 import org.junit.Assert;
 import org.junit.Ignore;
+
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
 import java.util.Random;
+
+import static org.mockito.Mockito.*;
 
 class UtilsTest extends Utils {
 
@@ -21,22 +24,20 @@ class UtilsTest extends Utils {
         Assert.assertFalse(actual.isEmpty());
     }
 
-    @Test /*if one of Strings in Utils is null - test passed*/
-    public void testConcatenateWordsIsNotNull()   {
-        Assert.assertThrows(NullPointerException.class, ()->concatenateWords(null,null));
-        Assert.assertThrows(NullPointerException.class, ()->concatenateWords(null,""));
-        Assert.assertThrows(NullPointerException.class, ()-> concatenateWords("",null));
-
+    @Test
+    public void testConcatenateWordsIsNull()   {
+        Assert.assertTrue(utils.concatenateWords(null,null), true);
     }
+
     @Test
     public void testConcatenateWordsHasNotEmptyString(){
-        String actual = concatenateWords("","");
+        String actual = utils.concatenateWords("","");
         String expected = "";
         Assert.assertNotEquals(expected,actual);
     }
     @Test
     public void testConcatenateWordsNonLatin() {
-        String actual = concatenateWords("","");
+        String actual = utils.concatenateWords("","");
         String expected = concatenateWords("","").replaceAll("[^\\x00-\\xFF]", "").trim();
         Assert.assertEquals(expected, actual);
     }
@@ -44,13 +45,13 @@ class UtilsTest extends Utils {
     @Ignore
     @Test
     public  void testComputeFactorial() {
-        int actual = computeFactorial();
+        int actual = utils.computeFactorial();
         int expected = 24;
         Assert.assertEquals(expected, actual);
 
     }
     @Test
-    @Timeout(300)
+    @Timeout(2500)
     public void testFactorialWithTimeout() throws InterruptedException{
         int result = 1;
         int factorial = new Random().nextInt();

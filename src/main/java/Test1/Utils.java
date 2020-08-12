@@ -23,7 +23,7 @@ public class Utils {
         factorial = new Random().nextInt();
         for (int i = 1; i <= factorial; i++)
             result = result * i;
-        Thread.sleep(300);
+        Thread.sleep(2500);
         return result;
     }
 }
